@@ -1,3 +1,5 @@
+//O código do _app é renderizado apenas uma vez, por este motivo é colocado
+//aqui dentro o GlobalStyle.
 import React from 'react';
 import GlobalStyle from "../styles/GlobalStyle";
 
