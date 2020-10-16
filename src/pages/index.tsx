@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
+import { GetServerSideProps } from 'next';
 import { Title } from '../styles/pages/Home';
 
 interface IProduct {
@@ -6,16 +7,23 @@ interface IProduct {
   title: string;
 }
 
-export default function Home() {
-  const [recommendedProducts, setrecommendedProducts] = useState<IProduct[]>([]);
+interface HomeProps {
+  recommendedProducts: IProduct[];
+}
 
-  useEffect(() => {
-    fetch('http://localhost:3333/recommended').then(response => {
-      response.json().then(data => {
-        setrecommendedProducts(data);
-      })
-    })
-  }, [])
+export default function Home({ recommendedProducts }: HomeProps) {
+  // const [recommendedProducts, setrecommendedProducts] = useState<IProduct[]>([]);
+
+  //Client Side Fetching
+  //É utilizado principalmente quando não precisamos que a informação que está
+  //sendo apresentada na tela, não precisa ser apresentada aos motores de busca.
+  // useEffect(() => {
+  //   fetch('http://localhost:3333/recommended').then(response => {
+  //     response.json().then(data => {
+  //       setrecommendedProducts(data);
+  //     })
+  //   })
+  // }, [])
 
   return (
     <section>
@@ -29,4 +37,18 @@ export default function Home() {
       </ul>
     </section>
   )
+}
+
+//Só utilizamos getServerSideProps para informações que sejam necessárias
+//aos motores de busca, caso contrário deve-se utilizar client side fetching
+export const getServerSideProps: GetServerSideProps<HomeProps> = async() => {
+  const response = await fetch('http://localhost:3333/recommended');
+
+  const recommendedProducts = await response.json();
+  
+  return {
+    props: {
+      recommendedProducts
+    }
+  }
 }
