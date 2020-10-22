@@ -39,6 +39,9 @@ export default function Home({ recommendedProducts }: HomeProps) {
   )
 }
 
+// TTFB => Time to first byte
+// Tempo para o primeiro código estar disponível ao usuário.
+
 //Só utilizamos getServerSideProps para informações que sejam necessárias
 //aos motores de busca, caso contrário deve-se utilizar client side fetching
 export const getServerSideProps: GetServerSideProps<HomeProps> = async() => {
