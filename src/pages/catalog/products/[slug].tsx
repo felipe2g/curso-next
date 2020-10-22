@@ -1,8 +1,15 @@
 //Dynamic Routing using [slug]
 import { route } from 'next/dist/next-server/server/router';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import AddToCartModal from '../../../components/AddToCartModal';
+
+const AddToCartModal = dynamic(
+  () => import('../../../components/AddToCartModal'),
+  {
+    loading: () => <p>Loading... </p>
+  }
+)
 
 export default function Products(){
   const router = useRouter();
